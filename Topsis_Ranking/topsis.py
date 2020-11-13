@@ -25,10 +25,8 @@ def vector_normalise(dataset):
 #Find the weighted dataset by multiplying each value of the given dataset with respective column weights
 def weighted_matrix(dataset):
 
-    total_weight = sum(weights)
-    wgt = [x/total_weight for x in weights]
-    for k in range(len(wgt)):
-        dataset[column_names[k]] *= wgt[k]
+    for k in range(len(weights)):
+        dataset[column_names[k]] *= weights[k]
     return(dataset)
 
 #Find the ideal best and ideal worst values of a given column based on the impact values
@@ -65,10 +63,10 @@ def main():
 
     #Checking whether the command line arguments are as per our requirement
     if len(sys.argv) != 5:
-        logging.Exception("Wrong number of parameters.")
-        logging.Exception("5 parameters are required.")
-        logging.Exception("format: python topsis.py <InputDataFile> <Weights> <Impacts> <ResultFileName>")
-        logging.Exception("example: python topsis.py inputfile.csv “1,1,1,2” “+,+,-,+” result.csv ")
+        logging.exception("Wrong number of parameters.")
+        logging.exception("5 parameters are required.")
+        logging.exception("format: python topsis.py <InputDataFile> <Weights> <Impacts> <ResultFileName>")
+        logging.exception("example: python topsis.py inputfile.csv “1,1,1,2” “+,+,-,+” result.csv ")
         exit(0)
 
     #Extracting the filename from command line argument
@@ -78,41 +76,41 @@ def main():
 
     #Exception handling for the existence of the given file
     if not os.path.exists(filename):
-        raise Exception("Error !! %s file Not Found"%(path_name_data))
+        logging.exception("Error !! %s file Not Found"%(path_name_data))
 
     #Exception handling for the number of columns in dataset and the columns from 2nd contain numeric values
     df = pd.read_csv(filename)
     df1 = df.drop(['Model'], axis=1)
     column_names = list(df1.columns)
     if len(df.columns) < 3:
-        raise Exception("The number of columns in the input dataset do not meet the requirements!")
+        logging.exception("The number of columns in the input dataset do not meet the requirements!")
     else:
         colList = df.apply(lambda x: pd.to_numeric(x, errors='coerce').notnull().all())
         for i in range(1,len(column_names)):
             if colList[i]:
                 pass
             else:
-                raise Exception("Error!! %s column contains non-numeric values"%column_names[i])
+                logging.exception("Error!! %s column contains non-numeric values"%column_names[i])
 
     #Exception handling for the number of weights and impacts
     for i in range(0,len(sys.argv[2])-1,2):
         if sys.argv[2][i+1] != ',':
-            raise Exception("Weights are not separated by ','.")
+            logging.exception("Weights are not separated by ','.")
 
     for i in range(0,len(sys.argv[3])-1,2):
         if sys.argv[3][i+1] != ',':
-            raise Exception("Impacts are not separated by ','.")
+            logging.exception("Impacts are not separated by ','.")
 
     weights = list(sys.argv[2].split(','))
     weights = [int(i) for i in weights]
     impacts = list(sys.argv[3].split(','))
-    if (len(weights) != len(column_names)) or (len(impacts) != len(column_names)):
-        raise Exception("The number of weights or impacts provided do not meet the requirements.")
+    if (len(weights) != len(column_names)) or (len(impacts) != len(column_names) or (len(weights) != len(impacts))):
+        logging.exception("The number of weights or impacts provided do not meet the requirements.")
     
     #Exception handling for the value of impacts provided
     for x in impacts:
         if (x!='+') and (x!='-'):
-            raise Exception("The value of the impacts provided should be either '+' or '-'.")
+            logging.exception("The value of the impacts provided should be either '+' or '-'.")
 
     #Path of the result file
     path_name_result = sys.argv[4]
