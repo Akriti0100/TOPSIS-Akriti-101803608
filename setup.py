@@ -8,7 +8,7 @@ def readme():
 setup(
     name="TOPSIS-Akriti-101803608",
     packages=["Topsis_Ranking"],
-    version="1.0.2",
+    version="1.0.3",
     license="MIT",
     description="A Python package to get best alternative available using TOPSIS method.",
     long_description=readme(),
