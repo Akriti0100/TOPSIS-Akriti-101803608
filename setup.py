@@ -12,13 +12,13 @@ setup(
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     include_package_data=True,
     install_requires=["pandas"],
     entry_points={
         "console_scripts": [
-            "TOPSIS-Akriti-101803608=TOPSIS_Akriti_101803608.topsis:main",
+            "TOPSIS-Akriti-101803608=Topsis_Ranking.topsis:main",
         ]
     },
 )
