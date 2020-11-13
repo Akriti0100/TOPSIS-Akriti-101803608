@@ -8,3 +8,5 @@ Running the following query on the command-line interface will help to rank the 
 based on multiple, usually conflicting criteria.
   
     TOPSIS-Akriti-101803608 <weights> <impacts> <result_file_name>
+
+Note - Make sure that you run the command in the folder you have stored your data files , else provide the complete path of the file.
